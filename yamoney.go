@@ -143,7 +143,7 @@ func (ya *API) sendRq(req *http.Request) (ans PaymentInfo, err error) {
 		return
 	}
 
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != 200 && resp.StatusCode != 202 {
 		log.Println("[error]", err, string(content))
 	}
 
