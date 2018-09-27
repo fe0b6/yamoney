@@ -30,6 +30,13 @@ type Confirmation struct {
 	ConfirmationURL string `json:"confirmation_url"`
 }
 
+// NotifyObj - объект нотификации
+type NotifyObj struct {
+	Type   string      `json:"type"`
+	Event  string      `json:"event"`
+	Object PaymentInfo `json:"object"`
+}
+
 // PaymentInfo - объект ответа при создании платежа
 type PaymentInfo struct {
 	ID                  string          `json:"id"`
