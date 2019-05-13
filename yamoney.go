@@ -76,7 +76,8 @@ func (ya *API) Capture(id string, o *InitObj) (ans PaymentInfo, err error) {
 		// Добавляем уникальный ключ
 		req.Header.Set("Idempotence-Key", createIdempotenceKey(id, "capture"))
 
-		b, _ := ioutil.ReadAll(req.Body)
+		br, _ := req.GetBody()
+		b, _ := ioutil.ReadAll(br)
 		log.Println("[debug]", string(b))
 	}
 
@@ -128,7 +129,8 @@ func (ya *API) GetPaymentInfo(invoiceID string) (ans PaymentInfo, err error) {
 	if debug {
 		// Формируем запрос
 		req, _ := http.NewRequest("GET", paymentURL+invoiceID, nil)
-		b, _ := ioutil.ReadAll(req.Body)
+		br, _ := req.GetBody()
+		b, _ := ioutil.ReadAll(br)
 		log.Println("[debug]", string(b))
 	}
 
