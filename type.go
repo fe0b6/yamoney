@@ -20,16 +20,16 @@ type InitObj struct {
 
 // ReceiptEmail - объект плательщика
 type ReceiptEmail struct {
-	TaxSystemCode int            `json:"tax_system_code"`
-	Email         string         `json:"email"`
-	Items         []ReceiptItems `json:"items"`
+	//	TaxSystemCode int            `json:"tax_system_code"`
+	Email string         `json:"email"`
+	Items []ReceiptItems `json:"items"`
 }
 
 // ReceiptPhone - объект плательщика
 type ReceiptPhone struct {
-	TaxSystemCode int            `json:"tax_system_code"`
-	Phone         string         `json:"phone"`
-	Items         []ReceiptItems `json:"items"`
+	//	TaxSystemCode int            `json:"tax_system_code"`
+	Phone string         `json:"phone"`
+	Items []ReceiptItems `json:"items"`
 }
 
 // ReceiptItems - товары
