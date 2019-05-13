@@ -16,6 +16,15 @@ const (
 	defaultCurrency = "RUB"
 )
 
+var (
+	debug bool
+)
+
+// SetDebug - Устанавливаем debug
+func SetDebug(dbg bool) {
+	debug = dbg
+}
+
 // CreatePayment - Создание платежа
 func (ya *API) CreatePayment(id string, o *InitObj) (ans PaymentInfo, err error) {
 	if o.Amount.Currency == "" {
@@ -130,10 +139,9 @@ func (ya *API) sendRq(req *http.Request) (ans PaymentInfo, err error) {
 		return
 	}
 
-	// Если проблема с ответом
-	if resp.StatusCode != 200 && resp.StatusCode != 202 {
-		err = errors.New(resp.Status)
-		log.Println("[error]", resp.Status, resp.StatusCode)
+	if debug {
+		b, _ := ioutil.ReadAll(req.Body)
+		log.Println("[debug]", string(b))
 	}
 
 	// Читаем ответ
@@ -143,8 +151,15 @@ func (ya *API) sendRq(req *http.Request) (ans PaymentInfo, err error) {
 		return
 	}
 
+	if debug {
+		log.Println("[debug]", string(content))
+	}
+
+	// Если проблема с ответом
 	if resp.StatusCode != 200 && resp.StatusCode != 202 {
-		log.Println("[error]", err, string(content))
+		err = errors.New(resp.Status)
+		log.Println("[error]", resp.Status, resp.StatusCode)
+		log.Println("[error]", string(content))
 	}
 
 	// Парсим ответ
