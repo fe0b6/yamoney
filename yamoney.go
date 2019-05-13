@@ -125,6 +125,7 @@ func (ya *API) GetPaymentInfo(invoiceID string) (ans PaymentInfo, err error) {
 
 func (ya *API) sendRq(req *http.Request) (ans PaymentInfo, err error) {
 
+	req2 := req
 	// Добавляем авторизацию
 	req.SetBasicAuth(strconv.Itoa(ya.ShopID), ya.Secret)
 
@@ -140,7 +141,7 @@ func (ya *API) sendRq(req *http.Request) (ans PaymentInfo, err error) {
 	}
 
 	if debug {
-		b, _ := ioutil.ReadAll(req.Body)
+		b, _ := ioutil.ReadAll(req2.Body)
 		log.Println("[debug]", string(b))
 	}
 
