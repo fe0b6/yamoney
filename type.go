@@ -29,7 +29,7 @@ type Receipt struct {
 // ReceiptItems - товары
 type ReceiptItems struct {
 	Description    string `json:"description"`
-	Quantity       int    `json:"quantity"`
+	Quantity       string `json:"quantity"`
 	Amount         Amount `json:"amount"`
 	VatCode        int    `json:"vat_code"`
 	PaymentSubject string `json:"payment_subject"`
