@@ -15,6 +15,25 @@ type InitObj struct {
 	Confirmation Confirmation `json:"confirmation"`
 	Description  string       `json:"description"`
 	PaymentID    string       `json:"payment_id"`
+	Receipt      Receipt      `json:"receipt"`
+}
+
+// Receipt - объект плательщика
+type Receipt struct {
+	TaxSystemCode int            `json:"tax_system_code"`
+	Phone         int64          `json:"phone"`
+	Email         string         `json:"email"`
+	Items         []ReceiptItems `json:"items"`
+}
+
+// ReceiptItems - товары
+type ReceiptItems struct {
+	Description    string `json:"description"`
+	Quantity       int    `json:"quantity"`
+	Amount         Amount `json:"amount"`
+	VatCode        int    `json:"vat_code"`
+	PaymentSubject string `json:"payment_subject"`
+	PaymentMode    string `json:"payment_mode"`
 }
 
 // Amount - объект суммы платежа
@@ -54,6 +73,8 @@ type PaymentInfo struct {
 	Recipient           Recipient       `json:"recipient"`
 	Test                bool            `json:"test"`
 	ReceiptRegistration string          `json:"receipt_registration"`
+	PaymentSubject      string          `json:"payment_subject"`
+	PaymentMode         string          `json:"payment_mode"`
 }
 
 // PaymentMethod - объект информации о методе оплаты
