@@ -15,15 +15,21 @@ type InitObj struct {
 	Confirmation Confirmation `json:"confirmation"`
 	Description  string       `json:"description"`
 	PaymentID    string       `json:"payment_id"`
-	Receipt      Receipt      `json:"receipt"`
+	Receipt      interface{}  `json:"receipt"`
 }
 
-// Receipt - объект плательщика
-type Receipt struct {
-	//TaxSystemCode int            `json:"tax_system_code"`
-	Phone string         `json:"phone"`
-	Email string         `json:"email"`
-	Items []ReceiptItems `json:"items"`
+// ReceiptEmail - объект плательщика
+type ReceiptEmail struct {
+	TaxSystemCode int            `json:"tax_system_code"`
+	Email         string         `json:"email"`
+	Items         []ReceiptItems `json:"items"`
+}
+
+// ReceiptPhone - объект плательщика
+type ReceiptPhone struct {
+	TaxSystemCode int            `json:"tax_system_code"`
+	Phone         string         `json:"phone"`
+	Items         []ReceiptItems `json:"items"`
 }
 
 // ReceiptItems - товары
