@@ -68,6 +68,18 @@ func (ya *API) Capture(id string, o *InitObj) (ans PaymentInfo, err error) {
 		return
 	}
 
+	if debug {
+		// Формируем запрос
+		req, _ := http.NewRequest("POST", paymentURL+o.InvoiceID+"/capture", bytes.NewBuffer(b))
+		// Добавляем заголовое о том что это json
+		req.Header.Set("Content-Type", "application/json")
+		// Добавляем уникальный ключ
+		req.Header.Set("Idempotence-Key", createIdempotenceKey(id, "capture"))
+
+		b, _ := ioutil.ReadAll(req.Body)
+		log.Println("[debug]", string(b))
+	}
+
 	// Формируем запрос
 	req, err := http.NewRequest("POST", paymentURL+o.InvoiceID+"/capture", bytes.NewBuffer(b))
 	if err != nil {
@@ -113,6 +125,13 @@ func (ya *API) Refund(id string, o *InitObj) (ans PaymentInfo, err error) {
 // GetPaymentInfo - получаем информацию о платеже
 func (ya *API) GetPaymentInfo(invoiceID string) (ans PaymentInfo, err error) {
 
+	if debug {
+		// Формируем запрос
+		req, _ := http.NewRequest("GET", paymentURL+invoiceID, nil)
+		b, _ := ioutil.ReadAll(req.Body)
+		log.Println("[debug]", string(b))
+	}
+
 	// Формируем запрос
 	req, err := http.NewRequest("GET", paymentURL+invoiceID, nil)
 	if err != nil {
@@ -125,7 +144,6 @@ func (ya *API) GetPaymentInfo(invoiceID string) (ans PaymentInfo, err error) {
 
 func (ya *API) sendRq(req *http.Request) (ans PaymentInfo, err error) {
 
-	req2 := req
 	// Добавляем авторизацию
 	req.SetBasicAuth(strconv.Itoa(ya.ShopID), ya.Secret)
 
@@ -138,11 +156,6 @@ func (ya *API) sendRq(req *http.Request) (ans PaymentInfo, err error) {
 	if err != nil {
 		log.Println("[error]", err)
 		return
-	}
-
-	if debug {
-		b, _ := ioutil.ReadAll(req2.Body)
-		log.Println("[debug]", string(b))
 	}
 
 	// Читаем ответ
