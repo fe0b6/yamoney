@@ -21,7 +21,7 @@ type InitObj struct {
 // Receipt - объект плательщика
 type Receipt struct {
 	TaxSystemCode int            `json:"tax_system_code"`
-	Phone         int64          `json:"phone"`
+	Phone         string         `json:"phone"`
 	Email         string         `json:"email"`
 	Items         []ReceiptItems `json:"items"`
 }
