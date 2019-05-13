@@ -41,6 +41,11 @@ func (ya *API) CreatePayment(id string, o *InitObj) (ans PaymentInfo, err error)
 		return
 	}
 
+	if debug {
+		log.Println("[debug]", paymentURL)
+		log.Println("[debug]", string(b))
+	}
+
 	// Формируем запрос
 	req, err := http.NewRequest("POST", paymentURL, bytes.NewBuffer(b))
 	if err != nil {
@@ -69,6 +74,7 @@ func (ya *API) Capture(id string, o *InitObj) (ans PaymentInfo, err error) {
 	}
 
 	if debug {
+		log.Println("[debug]", paymentURL+o.InvoiceID+"/capture")
 		log.Println("[debug]", string(b))
 	}
 
