@@ -69,15 +69,6 @@ func (ya *API) Capture(id string, o *InitObj) (ans PaymentInfo, err error) {
 	}
 
 	if debug {
-		// Формируем запрос
-		req, _ := http.NewRequest("POST", paymentURL+o.InvoiceID+"/capture", bytes.NewBuffer(b))
-		// Добавляем заголовое о том что это json
-		req.Header.Set("Content-Type", "application/json")
-		// Добавляем уникальный ключ
-		req.Header.Set("Idempotence-Key", createIdempotenceKey(id, "capture"))
-
-		br, _ := req.GetBody()
-		b, _ := ioutil.ReadAll(br)
 		log.Println("[debug]", string(b))
 	}
 
@@ -125,14 +116,6 @@ func (ya *API) Refund(id string, o *InitObj) (ans PaymentInfo, err error) {
 
 // GetPaymentInfo - получаем информацию о платеже
 func (ya *API) GetPaymentInfo(invoiceID string) (ans PaymentInfo, err error) {
-
-	if debug {
-		// Формируем запрос
-		req, _ := http.NewRequest("GET", paymentURL+invoiceID, nil)
-		br, _ := req.GetBody()
-		b, _ := ioutil.ReadAll(br)
-		log.Println("[debug]", string(b))
-	}
 
 	// Формируем запрос
 	req, err := http.NewRequest("GET", paymentURL+invoiceID, nil)
