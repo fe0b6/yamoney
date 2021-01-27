@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	paymentURL      = "https://payment.yandex.net/api/v3/payments/"
-	refundURL       = "https://payment.yandex.net/api/v3/refunds/"
+	paymentURL      = "https://api.yookassa.ru/api/v3/payments/"
+	refundURL       = "https://api.yookassa.ru/api/v3/refunds/"
 	defaultCurrency = "RUB"
 )
 
